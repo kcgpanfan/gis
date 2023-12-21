@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<link rel="stylesheet" href="https://gis.tyfd.gov.tw/static/css/ol6.5.0.css" type="text/css">
+<style type="text/css">@import url('https://fonts.googleapis.com/css?family=Sriracha');</style>
+<link rel="stylesheet" href="https://gis.tncfd.gov.tw/Public/map/style.css">
+<style>
+body,html{overflow:hidden;outline:none;user-select:none;width:100%;height:100%;}html{background-color:rgb(0,20,60);background:url('https://gis.tncfd.gov.tw/static/img/bg.png') no-repeat center center fixed;}
+a,a:link,a:visited{color:#fff}
+::-webkit-scrollbar {width:1vw;}
+::-webkit-scrollbar-thumb {background:#333;border-radius:.5vw;border:1px solid #ccc;}
+::-webkit-scrollbar-track {background:rgba(255,255,255,0.8);border-radius:.5vw;}
+.txt0{display:none}.txt1{display:inline-block;font-family:"微軟正黑體","Microsoft JhengHei";}
+/* map.css */
+.KUOc-p{cursor:pointer;}
+/*area*/
+.KUO-m0-p0{margin:0;padding:0}.KUO-p0{padding:0}.KUO-p1px{padding:1px}.KUO-m0{margin:0}
+.KUOmt-1vh{margin-top:1vh}.KUOmt-1vw{margin-top:1vw}.KUOmt-dot5{margin-top:0.5vw}.KUOmt-1dot5{margin-top:1.5vw}.KUOmt-3px{margin-top:3px}.KUOmt-5px{margin-top:5px}.KUOmt-0{margin-top:0}.KUOmt-n2vw{margin-top:-2vw}
+.KUOml-1vw{margin-left:1vw}.KUOml-2vw{margin-left:2vw}.KUOml-1dot5vw{margin-left:1.5vw}.KUOml-dot5vw{margin-left:0.5vw}.KUOml-3px{margin-left:3px}.KUOml-2dot5vw{margin-left:2.5vw}.KUOml-dot25{margin-left:0.25vw}.KUOml-5px{margin-left:5px}.KUOml-0{margin-left:0}
+.KUOmb-3px{margin-bottom:3px}.KUOmb-2px{margin-bottom:2px}.KUOmb-dot5vw{margin-bottom:0.5vw}.KUOmb-2dot5{margin-bottom:2.5vw}
+.KUOmr-3px{margin-right:3px}.KUOmr-4px{margin-right:4px}.KUOmr-5px{margin-right:5px}.KUOmr-6px{margin-right:6px}.KUOmr-dot2{margin-right:0.2vw}.KUOmr-1px{margin-right:1px}.KUOmr-1vw{margin-right:1vw}.KUOmr-dot8{margin-right:0.8vw}.KUOmr-dot5{margin-right:0.5vw}.KUOmr-dot3{margin-right:0.3vw}
+.KUOpt-dot5{padding-top:.5vw}.KUOpl-4px{padding-left:4px}.KUOpr-4px{padding-right:4px}.KUOpl-1vw{padding-left:1vw}.KUOpl-dot6vw{padding-left:.6vw}.KUOpr-1vw{padding-right:1vw}.KUOpr-dot2{padding-right:.2vw}.KUOpl-dot2{padding-left:.2vw}.KUOplr-dot5vw{padding-left:0.5vw;padding-right:0.5vw}.KUOpl-5px{padding-left:5px}
+.KUObb-1dw{border-bottom:1px dashed #fff}
+
+/*font*/
+.KUOfs-4{font-size:4vw}.KUOfs-3{font-size:3vw}.KUOfs-2dot5{font-size:2.5vw}.KUOfs-2{font-size:2vw}.KUOfs-1dot65{font-size:1.65vw}.KUOfs-1dot8{font-size:1.8vw}.KUOfs-1{font-size:1vw}.KUOfs-dot5{font-size:0.5vw}.KUOfs-1dot2{font-size:1.2vw}.KUOfs-1dot5{font-size:1.5vw}.KUOfs-20px{font-size:20px}.KUOfs-1dot4{font-size:1.4vw}.KUOfs-12px{font-size:12px}.KUOfs-16px{font-size:16px}.KUOfs-1dot6{font-size:1.6vw}.KUOfs-dot8{font-size:0.8vw}.KUOfs-dot4{font-size:0.4vw}.KUOfs-24px{font-size:24px}.KUOfs-22px{font-size:22px}.KUOfs-18px{font-size:18px}
+.KUOfw-b{font-weight:bold}.KUOfs-i{font-style:italic}.KUOfs-n{font-style:normal}
+.KUOff-bkt{font-family:"標楷體"}.KUOff-msb{font-family:"微軟正黑體"}.KUOff-tnr{font-family:"Times New Roman"}.KUOff-ab{font-family:"Arial Black"}.KUOff-a{font-family:Arial}.KUOff-c-tm{font-family:'"Times New Roman","微軟正黑體"'}.KUOff-c-am{font-family:"Arial","微軟正黑體"}.KUOff-c-tb{font-family:"Times New Roman","標楷體","sans-serif"}.KUOff-s{font-family:Sriracha}.KUOff-m{font-family:Monoton}.KUOff-mono{font-family:monospace}
+
+/*position*/
+.KUOf-l{float:left}.KUOf-r{float:right}.KUOd-ib{display:inline-block}.KUOd-i{display:inline}.KUOd-n{display:none}.KUOd-f{display:flex}.KUOp-r{position:relative}.KUOp-a{position:absolute}.KUOz-1{z-index:1}.KUOz-2{z-index:2}.KUOz-3{z-index:3}.KUOz-4{z-index:4}.KUOz-5{z-index:5}.KUOof-h{overflow:hidden}
+.KUO-l0-t0{left:0;top:0}.KUO-r0-t0{right:0;top:0}.KUO-l0-b0{left:0;bottom:0}
+.KUO-w2-h2{width:2vw;height:2vw;}.KUO-w1-h1{width:1vw;height:1vw}.KUO-w1dot2-h1dot2{width:1.2vw;height:1.2vw}.KUO-w3dot75{width:3.75vw}.KUO-w1dot5-h1dot5{width:1.5vw;height:1.5vw;}.KUO-w6dot5{width:6.5vw}.KUOh-30px{height:30px}
+
+/* rotate */
+.KUOrot-180deg{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}
+
+/*HEADER*/
+#topbut{font-size:24px;display:inline;font-weight:bold;vertical-align:middle;}#topbut span{margin-top:3px;color:#fff;text-align:center;vertical-align:middle;padding:8px;cursor:pointer;}#topbut span:hover{background-color:#222;color:#f4be18}
+.logoSection{height: 100%;display: flex;flex-direction: row;align-items: center;}
+.headerLogo{height: 100%;}
+.headerTitle{font-size: 65px;font-weight: bolder;}
+
+/*MAIN-DIV*/
+
+/*OPENLAYERS*/
+.ol-zoom{left:auto;top:auto;right:8px;/*bottom:8px*/top:68vh}.ol-control{padding:1px}.ol-control button{background-color:rgba(0,0,0,0.8);cursor:pointer}
+
+/*NAVBAR*/
+#maptoggleform::-webkit-scrollbar {display:none}#maptoggleform::-webkit-scrollbar-thumb {display:none}#maptoggleform::-webkit-scrollbar-track {display:none}
+#maptoggleform{/*max-height:calc( 99vh - 98px );*/overflow-y:auto;overflow-x:initial}#maptoggleform:hover{width:15vw;height:calc( 99vh - 98px );}
+.KUO-toggle-form{line-height:1.2;margin-left:.6vw;top:8px;left:2px;transition:0.5s}
+.lswth{background-color:#333;color:#fff;text-shadow:0 0 2px rgba(0,0,0,.3);border:2px outset #fff;border-radius:.5vw;left:0;width:2vw;box-shadow:inset 0 0 2px 0 rgba(255,255,255,.4),inset 0 0 3px 0 rgba(0,0,0,.4),inset 0 0 3px 5px rgba(0,0,0,.05),2px 2px 4px 0 rgba(0,0,0,.25);position:relative;padding-top:2px;padding-bottom:2px}
+.lswth:before{top:0;border-bottom-left-radius:.5vw;border-bottom-right-radius:.5vw;background:rgba(255,255,255,0.6);box-shadow:0 1px 2px 0 rgba(255,255,255,0.6)}
+.lswth:after{bottom:0;border-top-left-radius:.5vw;border-top-right-radius:.5vw;background:rgba(0,0,0,0.15);box-shadow:0 -1px 2px 0 rgba(0,0,0,0.15)}
+.lswth:before,.lswth:after{content:'';display:block;position:absolute;right:2px;left:2px;height:3px}
+.lswth:hover{background-color:#fdf5e6;font-weight:bold;color:#000;border-color:#666}
+.iswth[type=checkbox]{display:none;float:right;margin-right:.5vw;margin-top:.3vw}
+.iswth[type=checkbox]+label:after{content:"OFF";font-family:Arial;position:absolute;z-index:2;float:right;right:0;top:0;margin:.3vw .1vw .2vw .1vw;/*display:inline-block;*/background:#cbc;width:3vw;padding:.1vw .5vw .1vw .5vw;border-radius:1vw;box-shadow:inset 1px 1px 1px 1px rgba(0,0,0,0.8),inset -1px -1px 1px 1px rgba(0,0,0,0.3);color:#989;text-shadow:1px 1px rgba(255,255,255,0.4);font-size:1vw;text-align:left}
+.iswth[type=checkbox]:checked+label:after{content:"ON";font-family:Arial;text-align:right;background:#aca;color:#693;text-shadow:1px 1px rgba(255,255,255,0.8)}
+.iswth[type=checkbox]+label:before{content:"";position:absolute;z-index:3;width:1.2vw;height:1.2vw;margin-left:8vw;margin-top:.1vw;right:.3vw;top:.3vw;border-radius:1.2vw;background:#eee;box-shadow:0 1px 1px 1px #000,inset 0 3px 4px #fff;-webkit-transition:right .3s linear;transition:right .3s linear}
+.iswth[type=checkbox]:checked+label:before{left:.1vw;top:.3vw}
+.KUOsubtoggle{border-radius:5px;transition:display 0.5s ease;padding-left: 3px;}
+.sublswth{position:absolute;top:0;left:100%;padding:5px;padding-bottom:10px;background-color:rgba(0,0,0,0.8);display:none}
+.lswth2{box-sizing: border-box;border:1px solid #aaa;border-radius:.5vw;left:0;width:12vw;box-shadow:0 0 1px #fff;color:#fff;text-shadow:1px 1px 2px #aaa,-1px -1px 3px #000;background-color:rgba(0,0,0,0.4);clear:both;cursor:pointer;/*display:inline-block;*/margin:0;margin-top:1px;/*padding:0*/;position:relative;font-size:1.5vw;float:left;z-index:1.5}
+.lswth2:hover{/*background-color:rgba(168,168,168,0.5);*/background-color:rgba(240,190,24,0.3)}
+.lswth2 label span,#basemap .lswth2{font-family:"Microsoft Jhenghei"}
+.sublswthsep{color:#666;text-shadow:1px 1px #aaa;font-size:1vw;text-align:left;padding-left:3px;padding-top:5px;display:block;clear:both}
+.sublswthchkx{box-shadow:0 0 0 1px #000;cursor:pointer;margin-bottom:.5vw;vertical-align:middle}
+.selbasemap{color:#f4be18}
+#maptoggleform label{cursor: pointer;}
+
+/* popup */
+#popup{position:absolute;background-color:white;text-align:center;width:90px;left:50%;bottom:150%;margin-bottom:10px;padding:3px 0;margin-left:-45px;border-radius:4px;border-width:1px;border-style:solid;color:black;}
+
+/* 座標轉換 */
+/* #tdCursor{vertical-align:top;background-color:rgba(0,0,0,0.7);border-radius:5px;padding:5px;margin:0;position: absolute;top:10px;right:10px;color:white;font-family: 'Arial Black';font-size: 18px;display: flex;flex-direction: row;box-shadow: 1px 1px 1px #000000;border: 2px solid #ffffff;z-index:2;vertical-align:top;} */
+#tdCursor{position: absolute;right:0px;top:0px;color:rgb(0, 0, 0);font-family: 'Arial Black';z-index:2;vertical-align:top;left: 50%;display: flex;transform: translate(-50%, 0px);justify-content: center; transition: .5s;user-select: text;}
+.tdCursor li{list-style:none;line-height:1;padding:0;margin:0;}
+/* #epsgproj{max-width:18px} */
+#dragtdCursor{display:flex;margin-right: 10px;}
+#tdCursor2{display:none;}
+
+/* popupTable */
+.popupTable{padding:2px;margin-left:5px;}
+.popupTable table,.popupTable td {border: 1px solid #333;font-size: 25px;font-family: '微軟正黑體';}
+.popupTable thead,.popupTable tfoot{background-color: #333;color: #fff;}
+
+/* toolbox */
+.toolBox{position: absolute;background-color: rgba(53, 53, 53, 0.7);top: 10px;right: 10px;color: white;font-size: 40px;border: 2px solid #fff;box-shadow: 2px 2px 0px #000;}
+.toolBox input{display: none;}
+.tooltip .tooltiptext {visibility: hidden;width: 120px;background-color: rgba(0, 0, 0, 0.664);color: #fff;text-align: center;border-radius: 6px;padding: 5px 0;position: absolute;z-index: 1;right: 110%;font-size: 25px;}
+.tooltip > .tooltiptext::after {content: "";position: absolute;top: 50%;left: 100%;margin-top: -5px;border-width: 5px;border-style: solid;border-color: transparent transparent transparent black;}
+.tooltip{padding:10px;}
+.tooltip i{cursor: pointer;}
+/* .tooltip .active{background-color: rgb(199, 94, 94);} */
+.tooltip:hover{background-color: rgb(199, 94, 94);}
+.tooltip:hover .tooltiptext {visibility: visible;}
+
+/* 案件列表 */
+
+#caselist{position: absolute;right: 5px;top: 40px;z-index: 14;background-color: rgba(0, 0, 0, 0.721);padding: 5px;font-size: 1.5vw;user-select: text;border: 2px solid #ffffff;border-radius: 5px;box-shadow: 3px 3px 0px #545454;word-wrap:break-word;padding-right:10px;transition:margin-right 0.5s;}
+.tableBox{overflow-y: auto;width: 20vw;height: 45vh;}
+#caseListTable{z-index: 10;}
+#caseListTable td{border-bottom: 1px solid rgb(255, 255, 255)}
+#caseListTable td:hover{background-color: #fff;color: black;cursor: pointer;}
+.collapseBtn{position: absolute;left: -36px;width: 35px;height: 55px;background: rgba(31, 31, 31, 0.713);top: 5px;z-index: 9;cursor: pointer;}
+
+/* nrcc.css */
+#nrccnum{position:absolute;top:0px;left:1vw;z-index:3;color:#fff;}
+.status *{position: relative;}
+.status{/*display: flex;justify-content: flex-start;align-items:flex-start;color:#000;text-shadow:1px 2px #888;*/text-shadow:2px 2px #000,1px 1px #888;}
+.statusBox{font-family: 'arial black';display:block;width:6vw;border: 2px solid black;border-radius: 10px;text-align: center;margin-left: 1vw;padding: 0px 5px;margin-top:2vh;box-shadow:1px 2px 0 2px #fff;color:#fff;text-shadow:1px 2px 1px #000,2px 2px 1px #fff;font-weight:bold;}
+.showstatusBox .statusBox{text-align: center;display: flex;}
+.statusBox .title{font-size: 2.1vh;writing-mode: vertical-lr ;padding: 6px 0px;}
+.statusBox .number{font-size: 6vh;display: flex;align-items: center;position: absolute;top: 50%;transform: translateY(-50%);right: 10px;}
+.statusBox.processCase{border-color: rgb(78, 161, 199);}
+.statusBox.processCase .title{background-color: rgb(78, 161, 199);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.endCase{border-color: rgb(83, 197, 79);}
+.statusBox.endCase .title{background-color: rgb(83, 197, 79);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.rescuePlane{border-color: rgb(233, 220, 38);}
+.statusBox.rescuePlane .title{background-color: rgb(233, 220, 38);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.rescueBoat{border-color: rgb(241, 121, 23);}
+.statusBox.rescueBoat .title{background-color: rgb(241, 121, 23);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.rescuePerson{border-color: rgb(170, 0, 161);}
+.statusBox.rescuePerson .title{background-color: rgb(170, 0, 161);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.standby{border-color: rgb(0, 164, 170);}
+.statusBox.standby .title{background-color: rgb(0, 164, 170);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.arrive{border-color: rgb(96,96,164)}
+.statusBox.arrive .title{background-color: rgb(96,96,164);left: -5px;border-radius: 8px 0px 0px 8px;}
+.statusBox.leave{border-color:rgb(164,0,96);}
+.statusBox.leave .title{background-color: rgb(164,0,96);left: -5px;border-radius: 8px 0px 0px 8px;}
+@media screen and (max-width:1500px) {
+.dispatchTitle {font-size: 35px;}
+.statusBox {width: 7vw; height: 8vh;}
+/* .statusBox .title {font-size: 20px;}
+.statusBox .number {font-size: 50px;position: absolute;right: 0px;vertical-align: middle;padding: 10px 10px;align-items: center;flex-direction:row;} */
+/* .statusBox.endCase{width: 190px;} */
+}
+
+/*Header*/
+#header{margin-top:-3px;position:absolute;top:0;left:0;z-index:1;margin-left:15vw;width: 100vw;}
+.arrow-right{width:0;height:0;border-color:#aaa transparent #008 transparent;border-style:solid solid solid solid;border-width:0px 24px 65px 0px;display:inline-block;margin-top:3px;}
+.headbutl{width:10vw;height:7vh;font-size:2vw;font-weight:bold;font-family:"Microsoft Jheng-Hei";background-color:darkblue;border:1px solid #000;box-shadow:0 0 0 3px #888;transform:skew(30deg);padding-left:3px;padding-right:3px;color:#fff;text-align:center;display:inline-block;vertical-align:top;margin-left:20px;cursor:pointer;}
+.headbutr{width:10vw;height:7vh;font-size:2vw;font-weight:bold;font-family:"Microsoft Jheng-Hei";background-color:darkblue;border:1px solid #000;box-shadow:0 0 0 3px #888;transform:skew(-30deg);padding-left:3px;padding-right:3px;color:#fff;text-align:center;display:inline-block;vertical-align:top;margin-left:20px;cursor:pointer;}
+.headbutl:hover,.headbutr:hover{background-color:#000;}
+.headbutl div{transform:skew(-30deg);padding-left:3px;padding-right:3px;text-align:center;vertical-align:middle;padding-top: 0.5vh;}
+.headbutr div{transform:skew(30deg);padding-left:3px;padding-right:3px;text-align:center;vertical-align:middle;padding-top: 0.5vh;}
+.headmid{width:20vw;height:7vh;background-color:darkblue;box-shadow:0 0 0 3px #008;border:3px solid #000;transform:perspective(220px) rotateX(-30deg);display:inline-block;vertical-align:top;margin-left:20px;cursor:pointer}
+.headmid:hover div{color:#ff0;font-weight:bold;}
+.headmid div{font-size:2vw;font-weight:bold;font-family:"Microsoft Jheng-Hei";color:#fff;text-align:center;transform:perspective(220px) rotateX(20deg)}
+.arrow-left{width:0;height:0;border-color:transparent transparent #008 transparent;border-style:solid solid solid solid;border-width:0px 0px 65px 24px;display:inline-block;margin-top:3px;margin-left:10px;}
+.actbut{background-color:#400;}
+
+/*Static*/
+#kuostatus{z-index:2;/*display:inline-block;*/float:right;color:#fff;margin-left:5px;/*border-radius:10px;border:3px ridge #fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5),0 0 3px #888;*/}
+.kuostatus{/*margin-left:10px;*/margin-top:1.8vh;padding-top:0;padding-bottom:0;font-size:1.5vw;font-family:'Microsoft Jhenghei';border-radius:8px;border:5px ridge #fff;text-align:center;vertical-align:top;max-width:180px;}
+.kuostatus legend{padding-top:0;padding-bottom:0;margin:0;font-size:1.1vw;line-height:1}
+.kuostatus img{width: 1.2vw;}
+.kuostatusnum{text-shadow:1px 1px #000,3px 3px #888;font-size:3.2vw;padding:0 5px;vertical-align:baseline;font-family:'Arial Black'}
+/* #kuostatus4{line-height:1;font-size:28px;display:block}#kuostatus4 img{height:24px;vertical-align:middle}
+#kuostatus4 tbody tr td:nth-child(2){font-family:'Arial Black';min-width:60px} */
+
+/*Main*/
+#main{display:block;background-color:rgba(0,0,0,0);width:100%;height:100%/*calc( 99vh - 75px )*/;overflow:hidden;color:#fff;z-index:0;top:0;left:0;}
+#mainleft{display:inline-block;height:90vh;width:20vw;background-color:rgba(0,0,0,0.3);transform:perspective(900px) rotateY(25deg);margin-top:6vh;border:1px solid #888;}
+#mainleft1{width:100%;height:35vh;margin:0px}
+#mainleft2{width:100%;height:29vh;margin:0px}
+#mainleft3{width:100%;height:18vh;margin:0px;margin-top: 2vh;margin-left: 1vw;}
+#map{display:inline-block;height:89vh;width:62vw;background-color:rgba(52,0,52,0.8);margin-top:9vh;vertical-align:top;border:1px solid rgba(128,128,128,0.5);position:relative;margin-left:-1.9vw;margin-right:-1.9vw;overflow:hidden;}
+/* #caselist{position:absolute;right:5px;top:5px;z-index:14;} */
+#mainright{display:inline-block;height:90vh;width:20vw;background-color:rgba(0,0,0,0.3);transform:perspective(900px) rotateY(-25deg);margin-top:6vh;border:1px solid #888;vertical-align:top;}
+#mainright1,#mainright2{width:9vw;height:90vh;display:inline-block;}
+#mainright2{width:10vw;}
+#mainright3{width:100%;height:35vh;float:right;}#mainright31,#mainright32{display:inline-block;width:100%;height:100%;}
+/*Bottom*/
+#mainbottom{position:absolute;bottom:0px;width:100%;height:25%;z-index:10;background-color:rgba(0,0,0,0.);transition:margin-bottom 0.5s;background-color:rgba(0,0,0,0.6);}
+#mainbottom div{display:inline-block;}
+/* #mainbottom1{margin-left:100px;width:440px;height:100px;}#mainbottom2{width:200px;height:300px;}#mainbottom3{width:600px;height:300px;} */
+/*Overall*/
+.ml5px{margin-left:5px;}
+.sideheader{font-size:1.5vw;;background-color: #0000;height:1.5vw;width: 100%;font-family:"微軟正黑體";font-weight: bolder;text-shadow: 0 2px 2px #bfbfbf;text-align: center;padding-top: 1vh;padding-bottom: 0.3vh;}
+
+/* case list selected */
+#caseListTable .caseSelected{background-color: red;}
+
+
+</style>
+</head>
+
+<body>
+
+  <!--Main-->
+ <div id=popup></div>
+ <div id="main">
+   <div id="mainleft">
+     <div id="mainleft1">
+        <!-- 分隊統計 -->
+        <div id="mainlefthead1" class="sideheader">近24小時分隊案件量</div>
+        <div class="staticsBox squad">
+          <div style="font-size: 1.2vw; font-family: 'Microsoft Jhenghei';">
+            <select name="" onchange="updatedeptchart('https://gis.tncfd.gov.tw');" id="deptlist" style="margin: 10px 0px 0px 10px; font-size: 1.2vw; font-family: 'Microsoft Jhenghei'; border-radius: 5px; cursor: pointer;">
+              <option value="1">第一大隊</option><option value="2">第二大隊</option><option value="3">第三大隊</option><option value="4">第四大隊</option><option value="5">第五大隊</option><option value="6">第六大隊</option>
+            </select>
+            總計<b id="deptnum"></b>個分隊 共<b id="depttotalnum"></b>件
+          </div>
+          <div id="caseSquad"></div>
+        </div>
+     </div>
+     <div id="mainlefthead2" class="sideheader">近24小時行政區案量</div>
+     <div id="mainleft2"></div>
+     <div id="mainlefthead3" class="sideheader">近24小時來話種類統計</div>
+     <div id="mainleft3"></div>
+   </div>
+   <div id="map">
+     <label style='z-index:20;color:#000;position:absolute;top:5px;right:0.6vw;font-size:1.5vw;cursor:pointer;'><input type="checkbox" style="display:none;" onchange="document.getElementById('caselist').style.marginRight=(this.checked)?'-500px':'0';"><i class="mds-list"></i></label>
+     <label style='z-index:20;color:#000;position:absolute;top:5px;right:2.5vw;font-size:1.5vw;cursor:pointer;'><input type="checkbox" style="display:none;" onchange="document.getElementById('tdCursor').style.top=(this.checked)?'-20px':'0';"><i class="mds-map-coord"></i></label>
+     <div id="caselist" style="margin-right:0;"><div class="tableBox"><table id="caseListTable"><tbody></tbody></table></div></div>
+<!--NavBar-->
+<i class="mds-left-solid-arrow" style="cursor:pointer;font-size:28px;position:absolute;top:5px;left:.6vw;z-index:20;height:28px;color:#000000;text-shadow:1px 2px #494949;" onclick="document.getElementById('maptoggleform').style.left=(-1*Math.ceil(window.innerWidth*0.105)-parseInt(document.getElementById('maptoggleform').style.left.replace('px','')))+'px';$(this).toggleClass('KUOrot-180deg');if(this.className.indexOf('KUOrot-180deg')>=0){toggleSubToggle(false);};"></i>
+<div id=maptoggleform class='KUOf-l KUOp-a KUOz-2 KUO-toggle-form' style="left:0px;top:40px;">
+
+<div class='KUOd-ib KUOp-r' onmouseover="document.getElementById('divoverlayss').style.display='inline-block';" onmouseout="document.getElementById('divoverlayss').style.display='none'">
+<span class='lswth KUOc-p KUOd-ib KUO-m0-p0 KUOp-r KUOfs-1dot5 KUOf-l KUOz-2' onclick="toggleSubToggle('divoverlayss')">
+
+<span class='KUOd-ib KUOml-5px'>圖層</span><span style="margin-left:5px"><i class="mds-layer"></i></span></span>
+<div class='KUOsubtoggle sublswth KUOc-p' id=divoverlayss onmouseover="this.previousElementSibling.style.fontWeight='bold'" onmouseout="this.previousElementSibling.style.fontWeight=''">
+<span class="lswth2"><input type=checkbox class=iswth id=btoverlay4 onchange="overlayOpenData(4,this.checked)" autocomplete="off"><label for=btoverlay4 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>村里鄰界</span></label></span><br>
+<!-- <span class="lswth2"><input type=checkbox class=iswth id=btoverlay7 onchange="waterSource(this.checked)" autocomplete="off"><label for=btoverlay7 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>消防水源 *</span></label></span><br> -->
+<span class="lswth2"><input type=checkbox class=iswth id=btoverlay8  onchange="dspLocation(this.checked)" autocomplete="off"><label for=btoverlay8 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>分隊點位</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btoverlay9  onchange="hospitalLocation(this.checked)" autocomplete="off"><label for=btoverlay9 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>急救醫院</span></label></span><br>
+<!-- <span class="lswth2"><input type=checkbox class=iswth id=btoverlay10  onchange="aedpLocation(this.checked)" autocomplete="off"><label for=btoverlay10 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>AED場所</span></label></span><br> -->
+<!-- <span class="lswth2"><input type=checkbox class=iswth id=btoverlay11  onchange="nfascaLocation(this.checked)" autocomplete="off"><label for=btoverlay11 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>列管場所 *</span></label></span><br> -->
+</div></div><br>
+
+<!-- <div class="KUOd-ib KUOp-r" onmouseover="document.getElementById('divweather').style.display='inline-block'" onmouseout="document.getElementById('divweather').style.display='none'">
+<span class='lswth KUOc-p KUOd-ib KUO-m0-p0 KUOp-r KUOfs-1dot5 KUOf-l KUOz-2' onclick="toggleSubToggle('divweather')">
+<span class='KUOd-ib KUOml-5px'>環境</span><span style="margin-left:5px"><i class='fas fa-wind'></i></span></span>
+<div id="divweather" class='KUOsubtoggle sublswth KUOc-p' onmouseover="this.previousElementSibling.style.fontWeight='bold'" onmouseout="this.previousElementSibling.style.fontWeight=''">
+<span class="lswth2"><input type=checkbox class=iswth id=btweather1 onchange="rainfallStation(this.checked)" autocomplete="off"><label for=btweather1 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>即時雨量</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btweather2 onchange="tempStation(this.checked)"  autocomplete="off"><label for=btweather2 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>即時溫度</span></label></span><br>
+<span class="lswth2" style='display:none;'><input type=checkbox class=iswth id=btweather2 onchange="toggleWind(this.checked,2)" autocomplete="off"><label for=btweather2 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>衛星雲圖</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btweather4 onchange="getSeaTideMode(this.checked)" autocomplete="off"><label for=btweather4 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>潮汐模式</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btweather5 onchange="weekForecast(this.checked)" autocomplete="off"><label for=btweather5 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>鄉鎮預報</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btforecast1 onchange="getMountainSite(this.checked)" autocomplete="off"><label for=btforecast1 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>降雨機率</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btweather3 onchange="toggleWind(this.checked,1)" autocomplete="off"><label for=btweather3 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>氣象雷達</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btwarning1 onchange="toggleTyphoon(this.checked)" autocomplete="off"><label for=btwarning1 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>颱風警報</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btwarning2 onchange="getEarthquake(this.checked)" autocomplete="off"><label for=btwarning2 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>地震警報</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btwarning3 onchange="toggleEMIClayer(this.checked,'traffic',3)" autocomplete="off"><label for=btwarning3 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>EMIC路阻</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btwarning4 onchange="toggleEMIClayer(this.checked,'segfault',4)" autocomplete="off"><label for=btwarning4 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>EMIC斷層</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btwarning5 onchange="toggleEMIClayer(this.checked,'rainsta',5)" autocomplete="off"><label for=btwarning5 class='KUOf-l KUOpl-4px KUOc-p'><span class=KUOd-ib>EMIC雨量</span></label></span><br>
+</div></div><br> -->
+
+<div class="KUOd-ib KUOp-r" onmouseover="document.getElementById('divrealtime').style.display='inline-block'" onmouseout="document.getElementById('divrealtime').style.display='none'">
+<span class='lswth KUOc-p KUOd-ib KUO-m0-p0 KUOp-r KUOfs-1dot5 KUOf-l KUOz-2' onclick="toggleSubToggle('divrealtime')">
+<span class='KUOd-ib KUOml-5px'>即時</span><span style="margin-left:5px"><i class="mds-time"></i></span></span>
+<div id="divrealtime" class='KUOsubtoggle sublswth KUOc-p' onmouseover="this.previousElementSibling.style.fontWeight='bold'" onmouseout="this.previousElementSibling.style.fontWeight=''">
+<span class="lswth2"><input type=checkbox class=iswth id=btnrealtime1 onchange="caseLocation()" autocomplete="off" checked><label for=btnrealtime1 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>即時案件</span></label></span><br>
+<span class="lswth2"><input type=checkbox class=iswth id=btnrealtime2 onchange="carLocation()" autocomplete="off" checked><label for=btnrealtime2 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>車輛監控</span></label></span><br>
+</div></div><br>
+
+<!-- <div class="KUOd-ib KUOp-r" onmouseover="document.getElementById('divmaptools').style.display='inline-block'" onmouseout="document.getElementById('divmaptools').style.display='none'">
+  <span class='lswth KUOc-p KUOd-ib KUO-m0-p0 KUOp-r KUOfs-1dot5 KUOf-l KUOz-2' onclick="toggleSubToggle('divmaptools')">
+  <span class='KUOd-ib KUOml-5px'>工具</span><span style="margin-left:5px"><i class="fas fa-wrench"></i></span></span>
+  <div id="divmaptools" class='KUOsubtoggle sublswth KUOc-p' onmouseover="this.previousElementSibling.style.fontWeight='bold'" onmouseout="this.previousElementSibling.style.fontWeight=''">
+  <span class="lswth2"><input type=checkbox class=iswth id=btnmaptool1 onchange="toggleMeasure(this.checked, this);" autocomplete="off"><label for=btnmaptool1 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>測量工具</span></label></span><br>
+  <span class="lswth2"><input type=checkbox class=iswth id=btnmaptool2 onchange="toggleFreehand(this.checked, this);" autocomplete="off"><label for=btnmaptool2 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'>標記點位</span></label></span><br>
+  <span class="lswth2"><input type=checkbox class=iswth id=btnmaptool3 onchange="toggleDeclutter(this.checked, this);" autocomplete="off"><label for=btnmaptool3 class='KUOf-l KUOpl-4px KUOc-p'><span class='KUOd-ib'><u>動態</u>點位</span></label></span><br>
+  </div></div><br> -->
+
+<div class='KUOf-l KUOp-r' onmouseover="document.getElementById('basemap').style.display='inline-block';" onmouseout="document.getElementById('basemap').style.display='none'">
+<span class='lswth KUOc-p KUOd-ib KUO-m0-p0 KUOp-r KUOfs-1dot5 KUOf-l KUOz-2' onclick="toggleSubToggle('basemap')">
+<span class='KUOd-ib KUOml-5px KUOc-p'>底圖</span><span style="margin-left:5px"><i class="mds-map"></i></span></span>
+<div class='KUOsubtoggle sublswth' id=basemap onmouseover="this.previousElementSibling.style.fontWeight='bold'" onmouseout="this.previousElementSibling.style.fontWeight=''">
+<span class='lswth2 KUOpl-5px KUOmt-3px KUOz-2' data-n=0 class=selbasemap>TGOS(等高線)</span><br>
+<span class='lswth2 KUOpl-5px KUOmt-3px KUOz-2' data-n=1>TGOS(灰階圖)</span><br>
+<span class='lswth2 KUOpl-5px KUOmt-3px KUOz-2' data-n=2>TGOS(暗色)</span><br>
+<span class='lswth2 KUOpl-5px KUOmt-3px KUOz-2' data-n=3>TGOS航照</span><br>
+<span class='lswth2 KUOpl-5px KUOmt-3px KUOz-2' data-n=5>MDS底圖</span><br>
+</div><br style=clear:both></div>
+</div>
+
+<label style='z-index:20;color:#000;position:absolute;bottom:1vh;right:0.1vw;font-size:1.5vw;cursor:pointer;'><input type="checkbox" style="display:none;" onchange="document.getElementById('mainbottom').style.marginBottom=(this.checked)?'-500px':'0';"><i class="mds-list"></i></label>
+<div id="mainbottom" style="margin-bottom:0;"></div>
+
+<!--tdCursor-->
+<div id=tdCursor class='tdCursor' onmouseover="this.style.visibility='visible'" style=position:absolute>
+  <menu id=dragtdCursor class='KUO-m0-p0 KUOd-ib'>
+    <li id=tdCursor1></li>，<li id=tdCursor2>DDD<sup>o</sup>MM.mm’E&nbsp;,&nbsp;DD<sup>o</sup>MM.mm’N</li><li id=tdCursor3>DDD<sup>o</sup>MM’mm"E&nbsp;,&nbsp;DD<sup>o</sup>MM’mm"N</li>
+  </menu>
+  <select id=epsgproj style="margin-top:0px;display: none;" class='KUOc-p KUOmt-3px KUOfs-1 KUOff-msb KUOt-c KUOva-t'>
+    <option value='EPSG:4326'>經緯度</option><option value='EPSG:3826'>TWD97-121</option><option value='EPSG:3825'>TWD97-119</option><option value='EPSG:3828'>TWD67-121</option><option value='EPSG:3827'>TWD67-119</option>
+  </select>
+</div>
+</div>
+
+    <div id="mainright">
+      <div id="mainright1">
+        <div id="nrccnum" class="status">
+          <div class="statusBox processCase"><div class="title">救護案</div><div class="number" id="ambu_status">22</div></div>
+          <div class="statusBox endCase"><div class="title">火災案</div><div class="number" id="fire_status">2</div></div>
+          <div class="statusBox rescuePlane"><div class="title">公務案</div><div class="number" id="work_status">1</div></div>
+          <div class="statusBox rescueBoat"><div class="title">其他案</div><div class="number" id="other_status">2</div></div>
+          <div class="statusBox rescuePerson"><div class="title">已派遣</div><div class="number" id="isdis_status">0</div></div>
+          <div class="statusBox standby"><div class="title">已出勤</div><div class="number" id="issta_status">10</div></div>
+          <div class="statusBox arrive"><div class="title">已到場</div><div class="number" id="isarv_status">10</div></div>
+          <div class="statusBox leave"><div class="title">已取消</div><div class="number" id="islev_status">10</div></div>
+      </div>    
+      </div>
+      <div id="mainright2">
+        <div id="kuostatus">
+          <fieldset class="kuostatus" style="background-color:rgba(128,128,0,0.3)"><legend>案件總量&nbsp;<img src="https://gis.tncfd.gov.tw/static/img/icon/file1.png" width="31px" style="vertical-align:bottom"></legend><span class="kuostatusnum" id="kuostatus1">98</span>件</fieldset>
+          <fieldset class="kuostatus" style="background-color:rgba(0,0,0,0.3)"><legend>出勤人數&nbsp;<img src="https://gis.tncfd.gov.tw/static/img/icon/rescuer.png" style="vertical-align:bottom"></legend><span class="kuostatusnum" id="kuostatus2">18</span>人</fieldset>
+          <fieldset class="kuostatus" style="background-color:rgba(128,0,0,0.3)"><legend>救護車<img src="https://gis.tncfd.gov.tw/static/img/icon/ambulance.png" style="vertical-align:bottom"></legend><span class="kuostatusnum" id="kuostatus3">18</span>輛</fieldset>
+          <fieldset class="kuostatus" style="background-color:rgba(0,128,0,0.3)"><legend>消防車<img src="https://gis.tncfd.gov.tw/static/img/icon/car.png" style="vertical-align:bottom"></legend><span class="kuostatusnum" id="kuostatus4">2</span>輛</fieldset>
+          <fieldset class="kuostatus" style="background-color:rgba(0,0,128,0.3)"><legend>派遣反應<img src="https://gis.tncfd.gov.tw/static/img/icon/dt1b.png" style="vertical-align:middle"></legend><span class="kuostatusnum" id="kuostatus5">18</span>秒</fieldset>
+          <fieldset class="kuostatus" style="background-color:rgba(128,0,128,0.3)"><legend>出勤時間<img src="https://gis.tncfd.gov.tw/static/img/icon/dt2a.png" style="vertical-align:middle"></legend><span class="kuostatusnum" id="kuostatus6">8</span>秒</fieldset>
+        </div>
+        <div id="mainright3"><div id="mainright31"></div><div id="mainright32"></div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Header-->
+  <div id="header">
+    <!-- <div class="arrow-right"></div> -->
+    <div id="headbut1" class="headbutl actbut ml5px" onclick="SetPage(1)"><div>即時案件</div></div>
+    <div id="headbut2" class="headbutl" onclick="SetPage(2)"><div>車輛動態</div></div>
+    <div class="headmid" onclick="window.location.href='https://gis.tncfd.gov.tw/rescue/gotoweb119?url=gis119'"><div>台南市政府消防局</div></div>
+    <div id="headbut3" class="headbutr" onclick="SetPage(3)"><div>受理成效</div></div>
+    <div id="headbut4" class="headbutr" onclick="SetPage(4)"><div>歷史查詢</div></div>
+    <!-- <div class="arrow-left"></div> -->
+  </div>
+
+<script src="https://gis.tncfd.gov.tw/static/js/jquery-3.6.0.min.js"></script>
+<script type=text/javascript src="https://gis.tncfd.gov.tw/static/js/ol6.5.0.js"></script>
+<script src="https://gis.tncfd.gov.tw/static/js/proj4.js"></script>
+<script src="https://gis.tncfd.gov.tw/static/js/apexcharts.js"></script>
+<script src="https://gis.tncfd.gov.tw/static/js/echarts.min.js"></script>
+<script src="https://gis.tncfd.gov.tw/static/js/echarts-gl.min.js"></script>
+<script src="https://kit.fontawesome.com/7bcadfdf1c.js" crossorigin="anonymous"></script><!--font awesome字體js 這個目前是用wei的key-->
+<script src="https://gis.tncfd.gov.tw/static/js/countUp.umd.js"></script>
+
+<script>
+var csno;
+
+//kuo 【左下】 報案工具
+var chart1_p1;
+var callclr=["ff006e","8338ec","fb5607","ffbe0b","3a86ff"];
+function setPiechart_case(justurl='https://gis.tncfd.gov.tw') {
+  let datavalue=[];
+  chart1_p1 = echarts.init(document.getElementById('mainleft3'));
+  $.getJSON(justurl+"/rescue/getacctype/json", function (f) {//讀取json
+    for (let i=0; i<f.telkind.length; i++) {
+      datavalue.push({value: f.telkind_c[i], name:f.telkind[i], itemStyle:{color:'#'+callclr[i]}});
+    };
+    var option1_p1 = {
+      tooltip: {trigger: 'item',textStyle:{fontSize:'20',fontWeight:'bold'},position:['60%','60%'] }, 
+      grid: { left: '15%', top: '0%', right: '20%', bottom: '20%' },
+      // legend: {bottom:'5%',textStyle:{fontSize: '16',color:'#f0f8ff',}},
+      xAxis:{type:'value',splitLine:{ show:false,lineStyle:{ color:['#FFFFFF'], width:1}},axisLabel: {show:false,textStyle:{color:'#FFFFFF',fontSize:14}}},
+      yAxis:{type:'category',data:f.telkind,axisLabel: {textStyle:{color:'#FFFFFF',fontSize:12},position:'inside'}},
+      series: [{
+          name: '報案工具',type: 'bar',
+          label: {show:true,textStyle:{fontSize:20,color:'#f0f8ff'},  formatter:'{c}件',position:'outside'},
+          data:datavalue, legend: {bottom:'5%',right:'5%'},
+          itemStyle: { borderRadius: 1, borderColor: '#fff', borderWidth: 2 },
+          barWidth:35,
+          emphasis: {itemStyle: {shadowBlur: 25,shadowOffsetX: 0,shadowColor: 'rgba(0, 0, 0, 0.5)'},label:{show:true}},
+      }]
+    };
+    chart1_p1.setOption(option1_p1);
+    // chart1_p1.resize({width: 400,height: 200});
+  })
+};
+setPiechart_case();
+
+//kuo【左上】 分隊執行案件量(from 台南)
+var deptchart;
+//分隊統計caseSquad
+function setDeptchart(justurl='https://gis.tncfd.gov.tw'){
+  var deptno=document.getElementById('deptlist').value;
+  $.get(justurl+'/rescue/getdeptcount/json?da='+deptno+'&gethr=1', function (dataJson) {
+    var datavalue=[];
+    var deptnum=0;
+    for (i in dataJson){
+      datavalue.push(dataJson[i].y);
+      deptnum=deptnum+parseInt(dataJson[i].y);
+    }
+    document.getElementById('deptnum').innerHTML=datavalue.length;
+    document.getElementById('depttotalnum').innerHTML=deptnum;
+    var deptoptions = {
+      series: [{data: dataJson}],
+      legend: {show: false,fontSize: '20px'},
+      chart: {type: 'treemap',fontFamily: 'Arial'},
+      dataLabels: {enabled: true,style: { fontSize: '20vw'},formatter: function(text, op) {return [text, op.value]},offsetY: -4},
+      tooltip: {enabled: true,shared: true,fillSeriesColor: true,style: {fontSize: '20px',foreColor:'#000'}},
+      colors: ["#f94144","#f3722c","#f8961e","#f9844a","#f9c74f","#90be6d","#43aa8b","#4d908e","#577590","#277da1"],
+      plotOptions: {treemap: {distributed: true,enableShades: false}}
+    };
+    deptchart = new ApexCharts(document.querySelector("#caseSquad"), deptoptions);    
+    deptchart.render();
+  });
+  setTimeout(updatedeptchart,15000);
+};
+//更新分隊
+function updatedeptchart(justurl='https://gis.tncfd.gov.tw') {
+  // var starttime='20220828050000';
+  // var endtime='21000101000000';
+  var deptno=document.getElementById('deptlist').value;
+  $.get(justurl+'/rescue/getdeptcount/json?da='+deptno+'&gethr=1', function (dataJson) {
+    aaaa=  dataJson;
+    var datavalue=[];
+    var deptnum=0;
+    for (i in dataJson){
+      datavalue.push(dataJson[i].y);
+      deptnum=deptnum+parseInt(dataJson[i].y);
+    }
+    document.getElementById('deptnum').innerHTML=datavalue.length;
+    document.getElementById('depttotalnum').innerHTML=deptnum;
+    deptchart.updateSeries([{data: dataJson}]);
+    setTimeout(updatedeptchart,15000);
+  });
+};
+setDeptchart();
+
+//kuomod 【左中】 行政區案件量
+// var catclr={"緊急救護":"#40FFFF","其他":"#FFFF40","火災":"#FF2024","為民服務":"#80FF40","災害搶救":"#FFA040","檢舉":"#cccccc","地震":"#40C0FF","颱風":"#FFA0FF"};
+var myChart5;
+function setBarchart_case() {
+  if (!myChart5) { myChart5=echarts.init(document.getElementById("mainleft2")); };
+  
+  $.getJSON("https://gis.fdkc.gov.tw/rescue/getcitycatcount/json", function (f) {//讀取json
+    var citycatdata=[];
+    for (let i=0; i<f.n.length; i++) {
+      citycatdata.push({value: f.n[i], name:f.city[i], itemStyle:{color:'#4EA8DE'}});
+    };    
+    var option_5 = {
+      tooltip: {trigger: 'item',textStyle:{fontSize:'20',fontWeight:'bold'},position:['60%','60%'] }, 
+      grid: { top: '3%',left:"3%",right:"4%",bottom:"0%",containLabel:!0},
+      // legend: {bottom:'5%',textStyle:{fontSize: '16',color:'#f0f8ff',}},
+      xAxis:{type:'value',splitLine:{ show:false,lineStyle:{ color:['#FFFFFF'], width:1}},axisLabel: {show:false,textStyle:{color:'#FFFFFF',fontSize:14}}},
+      yAxis:{inverse: true,type:'category',data:f.city,axisLabel: {textStyle:{color:'#FFFFFF',fontSize:12},position:'inside'}},
+      series: [{
+          name: '行政區案件量',type: 'bar',
+          label: {show:false,textStyle:{fontSize:10,color:'#f0f8ff'},  formatter:'{c}',position:'outside'},
+          data:citycatdata, legend: {bottom:'0%',right:'0%'},
+          itemStyle: { borderRadius: 1, borderColor: '#fff', borderWidth: 2 },
+          barWidth:8,
+          emphasis: {itemStyle: {shadowBlur: 25,shadowOffsetX: 0,shadowColor: 'rgba(0, 0, 0, 0.5)'},label:{show:true}},
+      }]
+    };
+    myChart5.setOption(option_5);
+    // myChart5.resize({width: 400,height: 200});
+    setTimeout(setBarchart_case,5000);
+  })
+};
+setBarchart_case()
+
+//麥瑞軒[即時案件][正下線段圖]start////////////////////////////////////////
+// var myChart6 = echarts.init(document.getElementById("mainbottom"),null,{width:1536,height:260})
+// var myChart6 = echarts.init(document.getElementById("mainbottom"),null,{width:1270,height:240});
+var myChart6 = echarts.init(document.getElementById("mainbottom"));
+function timeseries() {
+$.get("https://gis.fdkc.gov.tw/rescue/getimecount/json?f=case", function (geoJsonfcase) {
+  var fcase_now_h = new Date().getHours();
+  var fcase_fix_list = [];
+  for(i in geoJsonfcase.hours){i<10 ? fcase_fix_list.push('0'+i+":00") : fcase_fix_list.push(i+":00")};
+  var fcase_last_list_h = fcase_fix_list.splice(0,fcase_now_h+1);
+  var fcase_first_list_h = fcase_fix_list.splice(fcase_now_h-23);
+  var fcase_last_list_c = geoJsonfcase.count.splice(0,fcase_now_h+1);
+  var fcase_first_list_c = geoJsonfcase.count.splice(fcase_now_h-23);
+  var chart6_x_list = [];
+  for(i in fcase_first_list_h){chart6_x_list.push(fcase_first_list_h[i])};
+  for(i in fcase_last_list_h){chart6_x_list.push(fcase_last_list_h[i])};
+  var chart6_y_data = [];
+  for(i in fcase_first_list_c){chart6_y_data.push(fcase_first_list_c[i])};
+  for(i in fcase_last_list_c){chart6_y_data.push(fcase_last_list_c[i])};
+  chart6_y_data_max_id = chart6_y_data.indexOf(Math.max(...chart6_y_data));
+  chart6_y_data_min_id = chart6_y_data.indexOf(Math.min(...chart6_y_data));
+  // console.log(chart6_y_data_max_id);
+  // console.log(chart6_y_data_min_id);
+  option6 = {
+    tooltip: {trigger: 'axis',axisPointer: {type: 'cross'},formatter:'{b} ({c}件)'},
+    // toolbox: {show: true,feature: {saveAsImage: {}}},
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      axisLabel: {textStyle:{color:'#FFFFFF',fontSize:14}},
+      data : chart6_x_list
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {formatter: '{value} 件',textStyle:{color:'#FFFFFF',fontSize:14}},
+      splitLine:{ lineStyle:{ color:['rgba(255,255,255, 0.5)'], width:1} },
+    },   
+    series: [{
+        name: '案件量',
+        type: 'line',
+        smooth: true,
+        symbolSize:10,
+        itemStyle: {normal: {lineStyle: { width:4}}},
+        data : chart6_y_data,
+        areaStyle: {color:'rgba(255,255,0,0.4)'},
+        markArea: {itemStyle:{color: 'rgba(255, 173, 177, 0.6)'},
+        data: [
+          [
+            {name:'尖峰時段',xAxis: chart6_x_list[chart6_y_data_max_id -1],label:{fontSize:22,color:'white'},itemStyle: {color: 'rgba(255, 173, 177, 0.6)' }},
+            {xAxis: chart6_x_list[chart6_y_data_max_id +1]},
+
+          ],[
+            {name:'離峰時段',xAxis: chart6_x_list[chart6_y_data_min_id -1],label:{fontSize:22,color:'white'},itemStyle: {color: 'rgba(0,128,0, 0.6)' }},
+            {xAxis: chart6_x_list[chart6_y_data_min_id +1]},
+          ]
+        ]}
+    }],
+    visualMap: {
+      show: false,dimension: 0,
+      pieces: piecessetting(chart6_y_data_min_id,chart6_y_data_max_id)
+    },
+    grid:{left:70,top:30,width: "90%",height: "68%"}
+  };
+  myChart6.clear();
+  myChart6.setOption(option6);
+  
+  setTimeout(timeseries,30000);
+});
+};
+timeseries();
+function piecessetting(a,b){
+  piecesans = [];
+  if (a>b){piecesans =[{lte: chart6_y_data_max_id -1,color: '#FFD700', width:4},{gt: chart6_y_data_max_id -2,lte: chart6_y_data_max_id +1,color: 'red', width:4},{gt: chart6_y_data_max_id -2,lte: chart6_y_data_min_id -1,color: '#FFD700', width:4},{gt: chart6_y_data_min_id -2,lte: chart6_y_data_min_id +1,color: '#00FF00', width:4},{gt:  chart6_y_data_min_id +1,color: '#FFD700', width:4},]}
+  else{piecesans =[{lte: chart6_y_data_min_id -1,color: '#FFD700', width:4},{gt: chart6_y_data_min_id -2,lte: chart6_y_data_min_id +1,color: '#00FF00', width:4},{gt: chart6_y_data_min_id -2,lte: chart6_y_data_max_id -1,color: '#FFD700', width:4},{gt: chart6_y_data_max_id -2,lte: chart6_y_data_max_id +1,color: 'red', width:4},{gt:  chart6_y_data_max_id +1,color: '#FFD700', width:4},]};
+  return piecesans;
+}
+
+//更新儀表大小
+window.onresize=function(){chart1_p1.resize();myChart5.resize();myChart6.resize(); };
+
+// myChart6.setOption(option)
+//麥瑞軒[即時案件][正下線段圖]end////////////////////////////////////////
+
+/* map.js */
+proj4.defs("EPSG:3825", "+proj=tmerc +lat_0=0 +lon_0=119 +k=0.9999 +x_0=250000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+proj4.defs("EPSG:3826", "+proj=tmerc +lat_0=0 +lon_0=121 +k=0.9999 +x_0=250000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+proj4.defs("EPSG:3827", "+proj=tmerc +lat_0=0 +lon_0=119 +k=0.9999 +x_0=250000 +y_0=0 +ellps=aust_SA +units=m +no_defs");
+proj4.defs("EPSG:3828", "+proj=tmerc +lat_0=0 +lon_0=121 +k=0.9999 +x_0=250000 +y_0=0 +ellps=aust_SA +units=m +no_defs");
+proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+proj4.defs("EPSG:3857", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
+ol.proj.proj4.register(proj4);
+
+// const projectionSelect = document.getElementById('epsgproj');
+// projectionSelect.addEventListener('change', function (event) {
+//   mousepos.setProjection(event.target.value);
+// });
+
+// kuoadd map layers (case & car)
+var casepointsrc=new ol.source.Vector();
+var casepoint=new ol.layer.Vector({source:casepointsrc,zIndex:20,visible:true,style:casePointStyle,renderOrder:null,renderMode:'vector'});
+var carpointsrc=new ol.source.Vector();
+var carpoint=new ol.layer.Vector({source:carpointsrc,zIndex:18,visible:true,style:carPointStyle,renderOrder:null,renderMode:'vector'});
+const casePointCache={};//cache dict
+const caseTypeIconDict={
+  "其他":"03.png","火災":"01.png","緊急救護":"02.png","水災":"06.png","災害搶救":"09.png","檢舉案件":"08.png","地震":"05.png","颱風":"04.png","公務":"10.png",
+  "其他gray":"03gray.png","火災gray":"01gray.png","緊急救護gray":"02gray.png","水災gray":"06gray.png","災害搶救gray":"09gray.png","檢舉案件gray":"08gray.png","地震gray":"05gray.png","颱風gray":"04gray.png","公務gray":"10gray.png",
+};
+function casePointStyle(feature) {
+  let ct = feature.get('dis_code_case'); style=casePointCache[ct];
+  if(!style){style=casePointCache[ct]=new ol.style.Style({image: new ol.style.Icon(({src:'https://gis.tncfd.gov.tw/static/img/icon/'+caseTypeIconDict[ct],scale: 0.22,}))});}
+  return style;
+};
+function casePointGrayStyle(feature) {
+  let ct = feature.get('dis_code_case'); style=casePointCache[ct+'gray'];
+  if(!style){style=casePointCache[ct+'gray']=new ol.style.Style({image: new ol.style.Icon(({src: caseTypeIconDict[ct+'gray'],scale: 0.22,}))});}
+  return style;
+};
+function carPointStyle(feature) {
+  // return new ol.style.Style({image:new ol.style.Icon({anchor:[.5,.5],anchorXUnits:'fraction',/*rotation:Math.PI/180*feature.get('dir0'),*/
+  //   anchorYUnits:'fraction',src:'https://gis.tncfd.gov.tw/static/img/'+((feature.get('call_no').length>3 && feature.get('call_no')[2]=='9')?'ambulance':'fire_truck')+'.png',scale:0.35*2})});
+  let ii=new ol.style.Style({image:new ol.style.Icon({anchor:[.5,.5],anchorXUnits:'fraction',rotation:Math.PI/180*(feature.get('dir0')+90),
+    anchorYUnits:'fraction',src:'https://gis.tncfd.gov.tw/static/img/'+((feature.get('call_no').length<5 && feature.get('call_no')[2]=='9'||feature.get('call_no').length==5 && feature.get('call_no')[3]=='9')?'ambulance':'fire_truck')+'.png',scale:1})});
+  return feature.get('csno')?[ii,new ol.style.Style({text:new ol.style.Text({font:'16px sans-serif',text:feature.get('call_no'),fill:new ol.style.Fill({color:'#8f8'}),stroke:new ol.style.Stroke({color:'rgba(0,0,0,0.9)',width:5})})})]:ii;
+};
+
+//  scaleLine
+var scaleLineControl = new ol.control.ScaleLine();
+//設定地圖預設顯示底圖
+var baselayer = new ol.layer.Tile({zIndex:1}); var initbaselayer=0; toggleBaselayer(initbaselayer);
+// caseLine 虛線
+let caseDashLine = new ol.layer.Vector({source:new ol.source.Vector(),renderMode:'vector',declutter:true, zIndex: 12, style: [new ol.style.Style({ stroke: new ol.style.Stroke({ width: 5, color: '#000', lineDash:   [5, 8] }) }),new ol.style.Style({stroke: new ol.style.Stroke({ width: 3, color: '#ff0', lineDash: [5, 8] })})]}) ;
+
+// map變數
+var map = new ol.Map({
+  controls: ol.control.defaults({zoom:true,attribution:false,rotate:false}).extend([scaleLineControl]),
+  layers: [baselayer,casepoint,carpoint, caseDashLine],target:'map',
+  view: new ol.View({projection:"EPSG:3857",center: ol.proj.fromLonLat([120.36,22.67]),zoom:14,maxZoom:20,minZoom:5,enableRotation:false}),
+});
+
+// 底圖切換底圖資訊
+/*toggleBaseMap 監聽底圖切換按鈕*/
+$("#basemap span").on("click",function() {toggleBaselayer(this.dataset.n);});
+function toggleBaselayer(a) {
+  initbaselayer=parseInt(a);
+  $('.selbasemap').removeClass('selbasemap'); $('#basemap span[data-n="'+a+'"]').addClass('selbasemap');
+  var baselayerurl=[
+    "https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}",//MOI 18
+    "https://wmts.nlsc.gov.tw/wmts/EMAP01/default/EPSG:3857/{z}/{y}/{x}",//TGOS_gray 20
+    "https://wmts.nlsc.gov.tw/wmts/EMAP2/default/EPSG:3857/{z}/{y}/{x}.png",//暗色
+    "https://wmts.nlsc.gov.tw/wmts/PHOTO2/default/EPSG:3857/{z}/{y}/{x}.png",//TGOS航照
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",//OSM 21
+  ];
+  var baselayermaxzoom=[19,20,21,21,21,19];
+  baselayer.setSource(new ol.source.XYZ({url:baselayerurl[a],crossOrigin:(Math.abs(initbaselayer-6)==1)?null:'anonymous',maxZoom:baselayermaxzoom[a]}));
+};//end of func toggleBaselayer
+
+// 套疊圖層資訊，五千圖框、村里鄰界、地質敏感區、土石流潛勢
+function overlayOpenData(a,b) {
+  document.querySelector('label[for="btoverlay'+a+'"]').style.color=b?'#f4be18':'';
+  var odurl=[
+    "",
+    "",
+    "https://wmts.nlsc.gov.tw/wmts/B5000/default/EPSG:3857/{z}/{y}/{x}",//1/5000 20
+    "",
+    "https://bot.mds.com.tw/shared/map/County/{z}/{x}/{y}.png",//Village 20
+    "https://wmts.nlsc.gov.tw/wmts/GeoSensitive/default/EPSG:3857/{z}/{y}/{x}",//GeoSensitive 20
+    "https://wmts.nlsc.gov.tw/wmts/MUDSLIDE_PG/default/EPSG:3857/{z}/{y}/{x}",//MUDSLIDE_PG 20 
+  ];
+  odmaxzoom=[0,0,20,0,15,20,20];
+  if (b) {
+    map.addLayer(new ol.layer.Tile({source:new ol.source.XYZ({url:odurl[a],crossOrigin:'anonymous',maxZoom:odmaxzoom[a]}),zIndex:3,name:'overlayopendata'+a}));
+  } else {
+    var i=map.getLayers().getArray(); for (var j=0; j<i.length; j++) { if(i[j].get('name')=='overlayopendata'+a) {map.removeLayer(i[j]); break;}}
+  };
+};//end of func overlayOpenData
+
+//經緯度線start
+var grid=new ol.layer.Graticule({strokeStyle:new ol.style.Stroke({color:'rgba(120,120,120,.9)',width:1}),zIndex:6,showLabels:true,
+  lonLabelStyle:new ol.style.Text({font: '12px Arial,Calibri,sans-serif',textBaseline:'bottom',fill:new ol.style.Fill({color:'#000'}),stroke:new ol.style.Stroke({color:'#aaa',width:2})}),
+  latLabelStyle:new ol.style.Text({font:'12px Arial,Calibri,sans-serif',textAlign:'end',fill:new ol.style.Fill({color:'#000'}),stroke:new ol.style.Stroke({color:"rgba(255,255,255,0.8)",width:1})})
+});
+function setGridVisible(checkif){
+  document.querySelector('label[for="btoverlay1"]').style.color=checkif?'#f4be18':'';
+  if(checkif){map.addLayer(grid);}
+  else{map.removeLayer(grid);}
+}
+//經緯度線end
+
+function toggleSubToggle(a) {
+  if (!a) {
+    document.querySelectorAll(".KUOsubtoggle:not(.sublswth)").forEach(function(i){
+      i.className="KUOsubtoggle sublswth"; i.style.display="none"; }); return;
+  };
+  if (document.getElementById(a).className.indexOf("sublswth")>=0) {
+    if (parseInt(document.getElementById('maptoggleform').style.left.replace('px',''))>=-1) {
+      document.getElementById(a).parentElement.removeAttribute("onmouseout");
+      document.getElementById('maptoggleform').style.width='15vw';
+      document.getElementById(a).className = "KUOsubtoggle";
+      document.getElementById(a).style.display = "inline-block";
+    } else {
+      document.getElementById('maptoggleform').style.width='auto';
+      document.getElementById(a).parentElement.setAttribute("onmouseout", "document.getElementById('" + a + "').style.display='none'");
+    }
+  } else {
+    document.getElementById('maptoggleform').style.width='auto';
+    document.getElementById(a).parentElement.setAttribute("onmouseout", "document.getElementById('" + a + "').style.display='none'");
+    document.getElementById(a).className = "KUOsubtoggle sublswth";
+    document.getElementById(a).style.display = "none";
+  };
+};//end of func toggleSubToggle
+
+// 消防水源(署)nfawsd01
+var ws= new ol.layer.Vector({source: new ol.source.Vector({url: '/webdemo/gis119/geoSource/geolayers/nfawsd01.geojson',format: new ol.format.GeoJSON()}),zIndex:10});
+function waterSource(checkif){
+  document.querySelector('label[for="btoverlay7"]').style.color=checkif?'#f4be18':'';
+  if(checkif){ws.setStyle(wsStyle); map.addLayer(ws);}
+  else{map.removeLayer(ws);}
+}
+// 消防水源wsd01
+var ws2= new ol.layer.Vector({source: new ol.source.Vector({url: '/webdemo/gis119/geoSource/geolayers/wsd01.geojson',format: new ol.format.GeoJSON()}),zIndex:10});
+function waterSource2(checkif){
+  document.querySelector('label[for="btoverlay27"]').style.color=checkif?'#f4be18':'';
+  if(checkif){ws2.setStyle(wsStyle); map.addLayer(ws2);}
+  else{map.removeLayer(ws2);}
+}
+
+var tmpScale=0.15;
+function wsStyle(feature){
+  let imgSrc;
+  if(feature.get('KINDNO')=='游泳池'){
+    imgSrc="/webdemo/gis119/img/water/pool.png";
+  }else if(feature.get('KINDNO')=='蓄水池'){
+    imgSrc="/webdemo/gis119/img/water/cistern.png";
+  // }else if(feature.get('KINDNO')=='消防栓'&&feature.get('TYPENO')=='地下式'&&feature.get('PLUGSTATUS')=='良好'){
+  }else if(feature.get('KINDNO')=='消防栓'&&feature.get('TYPENO')=='地下式'&&feature.get('WSSTATUS')=='良好'){
+    imgSrc="/webdemo/gis119/img/water/down_good.png";
+  }else if(feature.get('KINDNO')=='消防栓'&&feature.get('TYPENO')=='地下式'&&feature.get('WSSTATUS')=='損壞'){
+    imgSrc="/webdemo/gis119/img/water/down_bad.png";
+  }else if(feature.get('KINDNO')=='消防栓'&&feature.get('TYPENO')=='地下式'&&feature.get('WSSTATUS')=='null'){
+    imgSrc="/webdemo/gis119/img/water/down_bad.png";
+  }else if(feature.get('KINDNO')=='消防栓'&&feature.get('TYPENO')=='地上式'&&feature.get('WSSTATUS')=='良好'){
+    imgSrc="/webdemo/gis119/img/water/up_good.png";
+  }else if(feature.get('KINDNO')=='消防栓'&&feature.get('TYPENO')=='地上式'&&feature.get('WSSTATUS')=='損壞'){
+    imgSrc="/webdemo/gis119/img/water/up_bad.png";
+  }else{
+    imgSrc="/webdemo/gis119/img/water/other.png";
+  }
+  return new ol.style.Style({
+    image: new ol.style.Icon(({
+        anchor: [0.5, 46],anchorXUnits: "fraction",anchorYUnits: "pixels",src: imgSrc,scale: tmpScale
+      })
+		),
+  });
+}
+
+//分隊
+var dspLoc= new ol.layer.Vector({source: new ol.source.Vector({url: '/webdemo/gis119/geoSource/geolayers/dept.geojson',format: new ol.format.GeoJSON()}),zIndex:10});
+function dspLocation(checkif){
+  document.querySelector('label[for="btoverlay8"]').style.color=checkif?'#f4be18':'';
+  if(checkif){dspLoc.setStyle(dspStyle); map.addLayer(dspLoc);}
+  else{map.removeLayer(dspLoc);}
+}
+function dspStyle(feature){
+  let imgSrc = '/webdemo/gis119/img/dept.png';
+  return new ol.style.Style({
+    image: new ol.style.Icon(({
+        anchor: [0.5, 46],anchorXUnits: "fraction",anchorYUnits: "pixels",src: imgSrc,scale: tmpScale
+      })
+		),
+  });
+}
+// 急救醫院
+var em_hos_gj= new ol.layer.Vector({source: new ol.source.Vector({url: '/webdemo/gis119/geoSource/geolayers/em_hospital_info.geojson',format: new ol.format.GeoJSON()}),zIndex:10});
+function hospitalLocation(checkif){
+  document.querySelector('label[for="btoverlay9"]').style.color=checkif?'#f4be18':'';
+  if(checkif){em_hos_gj.setStyle(em_hosStyle); map.addLayer(em_hos_gj);}
+  else{map.removeLayer(em_hos_gj);}
+}
+function em_hosStyle(feature){
+  let imgSrc = '/webdemo/gis119/img/hospital1.png';
+  return new ol.style.Style({
+    image: new ol.style.Icon(({
+        anchor: [0.5, 46],anchorXUnits: "fraction",anchorYUnits: "pixels",src: imgSrc,scale: tmpScale
+      })
+		),
+  });
+}
+
+// AED場所
+var aedp_gj= new ol.layer.Vector({source: new ol.source.Vector({url: '/webdemo/gis119/geoSource/geolayers/gis_aed.geojson',format: new ol.format.GeoJSON()}),zIndex:10});
+function aedpLocation(checkif){
+  document.querySelector('label[for="btoverlay10"]').style.color=checkif?'#f4be18':'';
+  if(checkif){aedp_gj.setStyle(aedpStyle); map.addLayer(aedp_gj);}
+  else{map.removeLayer(aedp_gj);}
+}
+function aedpStyle(feature){
+  let imgSrc = '/webdemo/gis119/img/aed2.png';
+  return new ol.style.Style({
+    image: new ol.style.Icon(({
+        anchor: [0.5, 46],anchorXUnits: "fraction",anchorYUnits: "pixels",src: imgSrc,scale: tmpScale
+      })
+		),
+  });
+}
+
+// 列管場所(消防署)NFASCA01
+var nfasca_gj= new ol.layer.Vector({source: new ol.source.Vector({url: '/webdemo/gis119/geoSource/geolayers/nfasca01.geojson',format: new ol.format.GeoJSON()}),zIndex:10});
+function nfascaLocation(checkif){
+  document.querySelector('label[for="btoverlay11"]').style.color=checkif?'#f4be18':'';
+  if(checkif){nfasca_gj.setStyle(nfascaStyle); map.addLayer(nfasca_gj);}
+  else{map.removeLayer(nfasca_gj);}
+}
+function nfascaStyle(feature){
+  let imgSrc = '/webdemo/gis119/img/nfasca.png';
+  return new ol.style.Style({
+    image: new ol.style.Icon(({
+        anchor: [0.5, 46],anchorXUnits: "fraction",anchorYUnits: "pixels",src: imgSrc,scale: tmpScale
+      })
+		),
+  });
+}
+
+// popup
+var divpop = document.getElementById('popup');
+var popup = new ol.Overlay({element: document.getElementById('popup')});
+map.addOverlay(popup);
+
+map.on('pointermove',function(evt){
+  var a=0;
+  var feature = this.forEachFeatureAtPixel(evt.pixel, function(feature,layer) {
+    switch (layer) {
+      case dspLoc:a=1;break;case em_hos_gj:a=3;break;case ws:a=7;break;case casepoint: a=12;break;case carpoint: a=13;break;
+      default:
+      if (layer && layer.get('name')) { 
+        if (layer.get('name').indexOf('dgdp')>=0) { a=2; }
+      }; 
+    }
+    return feature;
+  });
+  if (a>0) {
+    this.getTargetElement().style.cursor='pointer';
+    divpop.style.display='block';
+    let note;let time;let location;let unit;let value;
+    switch (a) {
+      case 1:
+        divpop.style.width='350px';
+        divpop.innerHTML=`<div class="popupTable"><table><thead><tr><th colspan="2">${feature.get('DEPTNAME')}</th></tr></thead><tbody><tr><td style="width:60px;">地址</td><td style='text-align:left;'>${feature.get('ADDR')}</td></tr></tbody></table></div>`;
+        popup.setPosition(evt.coordinate);
+        break;
+      case 3:
+        divpop.style.width='300px';
+        divpop.innerHTML=`<div class="popupTable"><table><thead><tr><th colspan="2">${feature.get('HOSPITAL_DESC')}</th></tr></thead><tbody><tr><td style="width:60px;">地址</td><td style='text-align:left;'>${feature.get('HOSP_ADDR')}</td></tr></tbody></table></div>`;
+        popup.setPosition(evt.coordinate);
+        break;
+      case 7:
+        divpop.style.width='300px';
+        divpop.innerHTML='<div class="popupTable">'+'<table>'+'<thead>'+'<tr>'+'<th colspan="2">'+feature.get('WSNO')+'</th>'+'</tr>'+'</thead>'+'<tbody>'+'<tr>'+'<td style="width:60px;">種類</td>'+'<td>'+feature.get('KINDNO')+'</td>'+'</tr>'+'<tr>'+'<td>類別</td>'+'<td>'+feature.get('TYPENO')+'</td>'+'</tr>'+'<tr>'+'<td>狀態</td>'+'<td>'+feature.get('PLUGSTATUS')+'</td>'+'</tr>'+'<tr>'+'<td>地址</td>'+'<td style="font-size:20px;text-align:left;">'+feature.get('ADDRESS')+'</td>'+'</tr>'+'</tbody>'+'</table>'+'</div>';
+        popup.setPosition(evt.coordinate);
+        break;
+      case 9:
+        divpop.style.width='200px';
+        divpop.innerHTML='<div style="font-size:25px;color=black">呼號：'+feature.get('name0')+'</div>';
+        popup.setPosition(evt.coordinate);
+        break;
+      case 10:
+        divpop.style.width='200px';
+        divpop.innerHTML='<div style="font-size:25px;color=black";>醫院：'+feature.get('HOSPITAL_NAME')+'</div>';
+        popup.setPosition(evt.coordinate);
+        break;
+      case 11:
+        divpop.style.width='230px';
+        divpop.innerHTML='<div style="font-size:25px;color=black">'+feature.get('addr').split('局')[1]+'</div>';
+        popup.setPosition(evt.coordinate);
+        break;
+      case 12:
+        divpop.style.width='300px';
+        divpop.innerHTML='<div class="popupTable"><table><thead><tr><th colspan="2">'+feature.get('csno')+'</th></tr></thead><tbody><tr><td style="width:60px;">'+feature.get('dept')+'</td><td style="font-size:20px;">'+feature.get('nt_name')+'  '+feature.get('nt_tel')+'</td></tr><tr><td>'+feature.get('dis_code_case')+'</td><td>'+feature.get('dis_code')+'</td></tr><tr><td colspan="2">'+feature.get('cs_place')+'</td></tr><tr><td colspan="2">'+feature.get('memo')+'</td></tr><tr><td>時間</td><td style="font-size:18px;text-align:left;">'+new Date(feature.get('in_time')).toLocaleString()+'</td></tr></tbody></table></div>';
+        popup.setPosition(evt.coordinate);
+        break;
+      case 13:
+        divpop.style.width='270px';
+        divpop.innerHTML='<div class="popupTable"><table><thead><tr><th colspan="2">'+(feature.get('csno')||'---')+'</th></tr></thead><tbody><tr><td style="width:60px;">車號</td><td>'+feature.get('car_no')+'</td></tr><tr><td>呼號</td><td>'+feature.get('call_no')+'</td></tr><tr><td>狀態</td><td>'+(feature.get('csno')?'處理中':'待命中')+'</td></tr><tr><td>時間</td><td style="font-size:18px;text-align:left;">'+new Date(feature.get('msg_date')).toLocaleString()+'</td></tr></tbody></table></div>';
+        popup.setPosition(evt.coordinate);
+        break;
+    };
+  } else {
+    this.getTargetElement().style.cursor = '';
+    divpop.style.display='none';
+  }
+})
+
+map.on('singleclick',function(evt){
+  let a=0;
+  let feature = this.forEachFeatureAtPixel(evt.pixel, function(feature,layer) {
+    switch (layer) {
+      case casepoint: a=1;break;
+    }
+    return feature;
+  });
+  if (a>0) {
+    switch (a) {
+      case 1:
+        caseFeatureCoord = feature;
+        caseLink(feature);
+        break;
+    };
+  }
+})
+
+// 案件連線 start
+let caseFeatureCoord;
+map.on('moveend',function(){if(caseFeatureCoord!=undefined){caseLink(caseFeatureCoord);}})
+
+let scrollIo = false;
+document.querySelector('.tableBox').addEventListener("scroll", (event) => {
+  if (scrollIo){
+    casepointsrc.getFeatures().forEach(function(i) {document.getElementById(`${i.getId()}`).style.background = '';})
+    caseDashLine.getSource().clear();
+    caseFeatureCoord = undefined;
+  }
+});
+
+function caseLink(feature){
+  scrollIo = false;
+  // box positon
+  let caseRow=document.getElementById(`${feature.getId()}`);
+  caseRow.scrollIntoView(false);
+  let centerTop = $(caseRow).offset()['top'] - $('.ol-viewport').offset()['top'] + $(caseRow).height() / 2;
+  let centerLeft = $(caseRow).offset()['left'] - $('.ol-viewport').offset()['left'] + $(caseRow).width() / 2;
+
+  let boxcenter = map.getCoordinateFromPixel([centerLeft, centerTop]);
+  caseDashLine.getSource().clear();
+  caseDashLine.getSource().addFeature(new ol.Feature({geometry:new ol.geom.LineString([boxcenter, feature.getGeometry().getCoordinates()])})); 
+  
+  casepointsrc.getFeatures().forEach(function(i) {document.getElementById(`${i.getId()}`).style.background = '';})
+  document.getElementById(`${feature.getId()}`).style.background = 'red';
+
+  setTimeout(() => {scrollIo = true}, 500);//因scrollIntoView會一起觸發，所以新增IO和延遲
+}
+// 案件連線 end
+
+// 座標轉換
+var mousepos = new ol.control.MousePosition({
+  coordinateFormat: function(c) {
+    var i=document.getElementById('epsgproj').value;
+    var d=ol.proj.transform(c,i,'EPSG:4326');
+    document.getElementById('tdCursor2').innerHTML=(~~d[0])+"<sup>o</sup>"+("00"+((d[0]%1)*60).toFixed(2)).slice(-5)+"'E&nbsp;,&nbsp;"+(~~d[1])+"<sup>o</sup>"+("00"+((d[1]%1)*60).toFixed(2)).slice(-5)+"'N";
+    var ii=(~~((((d[0]-~~d[0])*60)-(~~((d[0]-~~d[0])*60)))*60)).toString()
+    document.getElementById('tdCursor3').innerHTML=(~~d[0])+"<sup>o</sup>"+("00"+(~~((d[0]-~~d[0])*60)).toString()).slice(-2)+"'"+("00"+(~~((((d[0]-~~d[0])*60)-(~~((d[0]-~~d[0])*60)))*60)).toString()).slice(-2)+'"E&nbsp;,&nbsp;'+(~~d[1])+"<sup>o</sup>"+("00"+(~~((d[1]-~~d[1])*60)).toString()).slice(-2)+"'"+("00"+(~~((((d[1]-~~d[1])*60)-(~~((d[1]-~~d[1])*60)))*60)).toString()).slice(-2)+'"N';
+    if (i=='EPSG:4326') {
+      return ol.coordinate.format(c," {x}<sup>o</sup>E , {y}<sup>o</sup>N&nbsp;",5);
+    } else {
+      var j=ol.coordinate.format(c,"{x},{y}",5); return ' '+j.split(',')[0].substr(0,11)+' , '+j.split(',')[1].substr(0,10)+'<sup>&nbsp;</sup>';
+    };
+  },
+  projection: document.getElementById('epsgproj').value, 
+  className: 'custom-mouse-position', 
+  target: document.getElementById('tdCursor1'),
+  undefinedHTML: " Longitude<sup>o</sup>E , Latitude<sup>o</sup>N&nbsp;"
+});
+map.addControl(mousepos);
+
+// 縮放icon大小
+map.getView().on('change:resolution', function(event) {
+  let mapzoom = map.getView().getZoom();
+  setLayerStyleScale(mapzoom);
+});
+function setLayerStyleScale(mapzoom) {
+  if (mapzoom < 12 && mapzoom > 10) { tmpScale = 0.2;pointFontSize='22px sans-serif';} 
+  else if (mapzoom < 14 && mapzoom >= 12) {tmpScale = 0.25;pointFontSize='24px sans-serif';}
+  else if (mapzoom >= 14 && mapzoom < 15) {tmpScale = 0.3;pointFontSize='26px sans-serif'} 
+  else if (mapzoom >= 15) {tmpScale = 0.35;pointFontSize='28px sans-serif';}
+  ws.setStyle(wsStyle);
+}
+// 縮放icon大小
+
+// declutter_
+function toggleDeclutter(a, b) {
+  document.querySelector('label[for="btnmaptool3"]').style.color=a?'#f4be18':'';
+  var f=map.getLayers().getArray(); for (var j=0; j<f.length; j++) {f[j].declutter_=a; f[j].changed();  }
+}//end of func toggleDeclutter
+
+// 案件列表 ====> kuo 要換 <== 換了
+let caseList = [];
+function caselist() {
+  let tbody = document.querySelector('#caseListTable tbody'); 
+  // table.innerHTML='';
+  // let tbody = table.createTBody();
+  let newCaseList = [];
+  casepointsrc.getFeatures().forEach(function(i) {
+    if (!(caseList.includes(i.getId()))){
+      let row = tbody.insertRow();
+      row.setAttribute('onclick','caseLocMove('+i.getId()+')');
+      row.setAttribute('id', `${i.getId()}`);
+      row.setAttribute('class', `test`);
+      row.insertCell(0).innerHTML=`<div><b>${i.getId()}</b></div><div>【${i.get('dis_code_case')}─${i.get('dis_code').split('_')[1]}】<br>${i.get('nt_name')}=${i.get('nt_tel')}<br>${i.get('cs_place')}<br>${new Date(i.get('in_time')).toLocaleString()}`;
+      caseList.push(i.getId());
+    }
+    newCaseList.push(i.getId());
+  });
+  checkCaseList(newCaseList);
+};
+function checkCaseList(newCaseList){
+  // for (let i=0;i< phoneList.length; i++){phoneIdList.push(phoneList[i].id.slice(1,));}//取得 list ID
+  // for (let i=0;i< newPhoneList.length; i++){newPhoneIdList.push(newPhoneList[i]['pk'].toString())}//取得 list ID
+  // console.log(`old:${caseList.length}, new:${newCaseList.length}`);
+  let difference = caseList.filter(x => !newCaseList.includes(x));
+  // console.log(difference);
+
+  if (difference.length>0){
+    for(let i=0;i<difference.length;i++){
+      $(`#${difference[i]}`).remove();
+      let index = caseList.indexOf(difference[i]);
+      if (index !== -1) {caseList.splice(index, 1);}//remove 原本array
+    }
+  }
+}
+//caselist();
+
+// 移動至案件位置
+function caseLocMove(i){
+  map.getView().animate({center:casepointsrc.getFeatureById(i).getGeometry().getCoordinates(),zoom: 16});
+}
+
+// 數字特效
+function countNumEffect(){
+  $.getJSON("https://gis.fdkc.gov.tw/rescue/getnowcount/json",function(j) {
+    if (j.io==1) {
+      if(document.getElementById('kuostatus1').innerHTML!=j.case) {document.getElementById('kuostatus1').innerHTML=j.case; new countUp.CountUp(kuostatus1,j.case).start();}
+      if(document.getElementById('kuostatus2').innerHTML!=j.man) {document.getElementById('kuostatus2').innerHTML=j.man;new countUp.CountUp(kuostatus2,j.man).start();};
+      if(document.getElementById('kuostatus3').innerHTML!=j.car1) {document.getElementById('kuostatus3').innerHTML=j.car1;new countUp.CountUp(kuostatus3,j.car1).start();}
+      if(document.getElementById('kuostatus4').innerHTML!=j.car-j.car1) { document.getElementById('kuostatus4').innerHTML=j.car-j.car1;new countUp.CountUp(kuostatus4,j.car-j.car1).start();}
+      if(document.getElementById('kuostatus5').innerHTML!=j.dt1) { document.getElementById('kuostatus5').innerHTML=j.dt1;new countUp.CountUp(kuostatus5,j.dt1).start();}
+      if(document.getElementById('kuostatus6').innerHTML!=j.dt2) { document.getElementById('kuostatus6').innerHTML=j.dt2;new countUp.CountUp(kuostatus6,j.dt2).start();}
+    
+      document.getElementById('ambu_status').innerHTML=j.ambu_case;
+      document.getElementById('fire_status').innerHTML=j.fire_case;
+      document.getElementById('work_status').innerHTML=j.work_case;
+      document.getElementById('other_status').innerHTML=j.other_case;
+      document.getElementById('isdis_status').innerHTML=j.is_dis;
+      document.getElementById('issta_status').innerHTML=j.is_sta;
+      document.getElementById('isarv_status').innerHTML=j.is_arv;
+      document.getElementById('islev_status').innerHTML=j.is_lev;
+
+      if (j.case>99){document.getElementById('kuostatus1').style.fontSize='2.1vw';}else{document.getElementById('kuostatus1').removeAttribute('style');};
+      if (j.man>99){document.getElementById('kuostatus2').style.fontSize='2.1vw';}else{document.getElementById('kuostatus2').removeAttribute('style');};
+      if (j.car1>99){document.getElementById('kuostatus3').style.fontSize='2.1vw';}else{document.getElementById('kuostatus3').removeAttribute('style');};
+      if (j.car-j.car1>99){document.getElementById('kuostatus4').style.fontSize='2.1vw';}else{document.getElementById('kuostatus4').removeAttribute('style');};
+      if (j.dt1>99){document.getElementById('kuostatus5').style.fontSize='2.1vw';}else{document.getElementById('kuostatus5').removeAttribute('style');};
+      if (j.dt2>99){document.getElementById('kuostatus6').style.fontSize='2.1vw';}else{document.getElementById('kuostatus6').removeAttribute('style');};
+
+      if (j.ambu_case>99){document.getElementById('ambu_status').style.fontSize='3.2vw';}else{document.getElementById('ambu_status').removeAttribute('style');};
+      if (j.fire_case>99){document.getElementById('fire_status').style.fontSize='3.2vw';}else{document.getElementById('fire_status').removeAttribute('style');};
+      if (j.work_case>99){document.getElementById('work_status').style.fontSize='3.2vw';}else{document.getElementById('work_status').removeAttribute('style');};
+      if (j.other_case>99){document.getElementById('other_status').style.fontSize='3.2vw';}else{document.getElementById('other_status').removeAttribute('style');};
+      if (j.is_dis>99){document.getElementById('isdis_status').style.fontSize='3.2vw';}else{document.getElementById('isdis_status').removeAttribute('style');};
+      if (j.is_sta>99){document.getElementById('issta_status').style.fontSize='3.2vw';}else{document.getElementById('issta_status').removeAttribute('style');};
+      if (j.is_arv>99){document.getElementById('isarv_status').style.fontSize='3.2vw';}else{document.getElementById('isarv_status').removeAttribute('style');};
+      if (j.is_lev>99){document.getElementById('islev_status').style.fontSize='3.2vw';}else{document.getElementById('islev_status').removeAttribute('style');};
+    };
+    setTimeout(countNumEffect,6500)
+  });
+};
+countNumEffect();
+
+//kuoadd 即時案件
+function caseLocation(){
+  casepoint.setVisible(document.getElementById('btnrealtime1').checked);
+  if (document.getElementById('btnrealtime1').checked) {
+    $.getJSON('https://gis.tncfd.gov.tw/rescue/getnowcase/json?getalls=1&hr=24',function(f) {
+      if (f.io==1) {
+        var csno=f.csno;
+        casepointsrc.getFeatures().forEach(function(i) {
+          let j=csno.indexOf(i.getId());
+          if (j<0) {
+            casepointsrc.removeFeature(i);
+          } else {
+            i.setProperties({csno:f.csno[j],dis_code:f.dis_code[j],in_time:f.in_time[j],dept:f.dept[j],nt_name:f.nt_name[j],nt_tel:f.nt_tel[j],cs_place:f.cs_place[j],memo:f.memo[j],dis_code_case:f.dis_code_case[j]});
+            i.getGeometry().setCoordinates(ol.proj.transform([f.x[j],f.y[j]],'EPSG:4326','EPSG:3857'));
+          };
+        });
+        for (let ii=0; ii<csno.length; ii++) {
+          if (!casepointsrc.getFeatureById(csno[ii])) {
+            let jj=new ol.Feature({type:'Point',geometry:new ol.geom.Point(ol.proj.transform([f.x[ii],f.y[ii]],'EPSG:4326','EPSG:3857')),csno:f.csno[ii],dis_code:f.dis_code[ii],in_time:f.in_time[ii],dept:f.dept[ii],nt_name:f.nt_name[ii],nt_tel:f.nt_tel[ii],cs_place:f.cs_place[ii],memo:f.memo[ii],dis_code_case:f.dis_code_case[ii]});
+            jj.setId(parseInt(csno[ii]));
+            casepointsrc.addFeature(jj);
+          };
+        };
+      };
+      caselist();
+      setTimeout(caseLocation,5000);
+    });
+  };
+};
+
+//kuomod 車輛監控
+function carLocation(){
+  carpoint.setVisible(document.getElementById('btnrealtime2').checked);
+  if (document.getElementById('btnrealtime2').checked) {
+    $.getJSON('https://gis.tncfd.gov.tw/rescue/getnowcar/json?getalls=1',function(f) {
+      if (f.io==1) {
+        var imei=f.imei;
+        carpointsrc.getFeatures().forEach(function(i) {
+          let j=imei.indexOf(i.getId());
+          if (j<0) {
+            carpointsrc.removeFeature(i);
+          } else {
+            i.setProperties({csno:f.csno[j],car_no:f.car_no[j],call_no:f.call_no[j],dir0:f.dir0[j],msg_date:f.msg_date[j]});
+            i.getGeometry().setCoordinates(ol.proj.transform([f.x[j],f.y[j]],'EPSG:4326','EPSG:3857'));
+          };
+        });
+        for (let ii=0; ii<imei.length; ii++) {
+          if (!carpointsrc.getFeatureById(imei[ii])) {
+            let jj=new ol.Feature({type:'Point',geometry:new ol.geom.Point(ol.proj.transform([f.x[ii],f.y[ii]],'EPSG:4326','EPSG:3857')),csno:f.csno[ii],car_no:f.car_no[ii],call_no:f.call_no[ii],dir0:f.dir0[ii],msg_date:f.msg_date[ii]});
+            jj.setId(imei[ii]);
+            carpointsrc.addFeature(jj);
+          };
+        };
+      };
+      setTimeout(carLocation,5000);
+    });
+  };
+};
+
+function init() {
+  caseLocation(); carLocation();
+};
+
+init();
+
+
+function SetPage(a) {
+  window.location.href='https://gis.tncfd.gov.tw/rescue/gotoweb119?url=index_p'+a+'.html';
+};
+
+
+
+
+</script>
+</body>
+</html>
